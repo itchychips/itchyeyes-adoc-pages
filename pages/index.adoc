@@ -31,3 +31,5 @@ beyond a provider-customer relationship. Any endorsements I choose to declare
 are my own choice, without incentive, and I am not in contact with any
 marketing affiliated with the companies thereof.)
 
+The Asciidoc markup for this site is available and source controlled
+https://github.com/itchychips/itchyeyes-adoc-pages[here.]
