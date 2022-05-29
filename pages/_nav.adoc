@@ -1,0 +1,9 @@
+[.text-center]
+| xref:articles/about.adoc[About]
+| xref:articles/cuis-smalltalk.adoc[Cuis Smalltalk]
+| xref:articles/philosophy.adoc[Philosophy, prog]
+| +
+| xref:articles/sitedesign.adoc[Site design]
+| xref:userscripts/index.adoc[Userscripts]
+| https://github.com/itchychips?tab=repositories[Git repos]
+|

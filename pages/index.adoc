@@ -1,0 +1,33 @@
+= Itchy Eyes, a personal site
+:docinfo: shared
+
+include::_nav.adoc[]
+
+Welcome to Itchy Eyes. This is a possible gaming group, possible game front,
+and possible just a site I dump all my miscellaneous junk onto.
+
+The site is simple. It should load fast. It is secured with SSL, and is ranked
+by Qualys SSL Labs as rank A through their
+https://www.ssllabs.com/ssltest/analyze.html?d=itchyeyes.net[testing tool.]
+While it isn't the highest A that's possible, it's still pretty good as I'm not
+handling any user data. Unlike nearly every site on the Internet, I'm not using
+cookies on the site!
+
+This site is run using Debian through a https://www.digitalocean.com/[Digital
+Ocean] droplet.
+
+I try to test the site on text based browsers as I can. As far as I'm
+concerned, the site should be as usable in a text-based browser as in a
+graphical-based one. I test with links, lynx, and elinks. Known issues:
+
+* links seems to center-align the main content. elinks and lynx do not do this.
+
+Email is error.chicken@itchyeyes.net. This email routes to Protonmail, thus if
+you wish to be as secure as possible, send from a Protonmail email address
+(hosted or otherwise).
+
+(This site is not affiliated or partnered with any companies that are mentioned
+beyond a provider-customer relationship. Any endorsements I choose to declare
+are my own choice, without incentive, and I am not in contact with any
+marketing affiliated with the companies thereof.)
+

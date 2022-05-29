@@ -1,0 +1,21 @@
+= Userscripts collection
+
+include::../_navhome.adoc[]
+
+These are a collection of userscripts that you can use with Tampermonkey and
+(probably) Violentmonkey.  All of these are fairly trivial, so should be MIT
+unless specified otherwise (see the source file itself for copyright
+information).
+
+https://github.com/kandiyohi/LinkedInDeAnnoyance[LinkedIn deannoyance]:: for
+mobile firefox automatically clicks the annoying banner on the LinkedIn mobile
+site that tries to get you to install the mobile app.  Tested on Mobile, and
+made using Firefox desktop's responsive design mode, though I believe it has
+stopped working.
+
+https://github.com/kandiyohi/YoutubeFlipVideo[Youtube Flip Video]:: adds a
+button to flip a Youtube video. This was made to follow along with dance videos
+so that it isn't necessarily to flip the moves or learn the dance mirrored.
+Tested and developed on Firefox desktop.
+
+

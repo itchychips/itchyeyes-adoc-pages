@@ -1,0 +1,45 @@
+= Site design
+
+:fn-gitea: footnote:gitea[I am considering on ditching https://gitea.io/en-us/[Gitea] for dual mirroring my repositories on https://github.com/[GitHub] and https://about.gitlab.com/[GitLab] as I can't be bothered to keep it up to date]
+:fn-antora: footnote:antora[I found this too heavyweight for a personal site, plus I believe it would be confusing for most people (including myself) to navigate.  Also, I didn't want to have to rewrite a significant chunk of their default UI bundle that has examples all over the place instead of being professionally usable out of the box.]
+:fn-asciidoctor-install: footnote:asciidoctor-install[On Windows, use msys2 or mingw32/64, because normal ruby might have issues with some asciidoctor extensions if you so choose.  I mostly observed this with ruby gems I've tried that need a C compiler--they failed to build.]
+
+include::../_navhome.adoc[]
+
+The site's design is simple. All of what I serve currently are static pages. My
+thought is that if I don't have a lot of traffic, it's better to have a site
+that loads super fast so people explore more. All sites should be fast, anyway.
+The current Web ecosystem where sites are free to take 2 seconds to load
+content not related to the main content is stupid and needs to die.
+
+Further, unless there are pages where Javascript may be useful (such as
+interactive graphs), the site should load fine on text-based browsers. Most of
+those don't have support for Javascript. If people want to view my site by
+those means, or just read the curl output, that's awesome. By serving purely
+static pages when possible, people can save articles for offline use and read
+or archive them at their leisure.
+
+I currently use https://asciidoc.org/[AsciiDoc] to generate the main site
+content pages, and I source control them on
+https://github.com/itchychips/itchyeyes-adoc-pages[in a git repository].  I
+find AsciiDoc to be a very intuitive, syntactically lightweight, and flexible
+language.  I considered trying to static generators like
+https://antora.org/[Antora] {fn-antora}, a static generator for
+https://www.markdownguide.org/[Markdown], or using a CMS like
+https://getgrav.org/[Grav] (which also uses Markdown with some extensions).
+
+In the end, the extensibility of AsciiDoc and the easiness of getting
+https://asciidoctor.org/[Asciidoctor] to work (install ruby, then `gem install
+asciidoctor` {fn-asciidoctor-install}) won out.
+
+As an aside, mobile friendliness is not too difficult. I just ripped the idea
+from the https://www.chiark.greenend.org.uk/~sgtatham/putty/[PuTTY homepage]
+after observing that it was much more mobile friendly than I imagined it would
+be.
+
+I do happen to host other applications (such as
+https://itchyeyes.net/gitea[gitea]{fn-gitea}) that probably don't fit the site's methods
+too much, but those applications are very useful and I try to be very
+lightweight with them if I can. Nevertheless, descriptive links from the static
+site should be good enough in many cases to help smooth over issues with
+browsers that might not have javascript or good CSS capabilities.

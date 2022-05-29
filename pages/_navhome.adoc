@@ -1,0 +1,3 @@
+[.text-center]
+| xref:../index.adoc[Back home]
+|

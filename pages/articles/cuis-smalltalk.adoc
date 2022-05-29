@@ -1,0 +1,118 @@
+= Cuis Smalltalk
+:toc: preamble
+:toclevels: 4
+
+include::../_navhome.adoc[]
+
+== A journey through Cuis smalltalk
+
+=== Getting started
+
+Getting the image to work is fairly simple. Follow the directions in https://github.com/Cuis-Smalltalk/Cuis-Smalltalk-Dev/blob/master/README.md[its README.]
+
+In a nutshell, clone the https://github.com/Cuis-Smalltalk/Cuis-Smalltalk-Dev[Cuis-Smalltalk-Dev repository], then download the https://github.com/OpenSmalltalk/opensmalltalk-vm/releases[Squeak VM] from its releases (I've had the most success with using "squeak cog spur"). After that's done, unzip Squeak and execute its executable and give the image from Cuis-Smalltalk-Dev as an argument (a file dialog should pop up if you do not give it as an argument to the executable itself).
+
+=== Adding and extending the system
+
+To add a class, do the following:
+
+. Click the desktop within Squeak
+. Select Open
+. Select Browser
+. Right click the category pane (top left-most pane) and select "add item", then confirm the name of the new category.
+. Change the template to how you want.
+
+To add a method to a class, do the following:
+
+. Select the category and class you want to add a method to (first two top panes)
+. Select the method category you want to add to ("-- all --" is acceptable)
+. Ensure you are not selecting an existing method (right-most top pane)
+. Modify the template in the bottom pane (template should be filled beginning with "messageSelectorAndArgumentNames")
+. To make a binary message instead of unary, add a colon and a variable name, e.g. "myMessage: aString"
+
+=== Using the FFI
+
+Using the FFI can be a slight struggle. First, Squeak's FFI only supports same architecture, so if you're using 64-bit Squeak, you must use a 64-bit DLL. Second, we're going to go over a very narrow use with using managed code on Windows, more specifically the types of DLLs that you can use when compiling from C#.
+
+One caveat with using the FFI with C# is that Squeak's FFI doesn't seem to support using AnyCPU as far as I've tested. It will end up with a "function address not found" error.
+
+==== 1. Load the FFI
+
+[source,smalltalk]
+--
+Feature require: 'FFITests'
+--
+
+==== 2. Create your function in Visual Studio (tested on 2019)
+
+Create a Class Library solution for the .NET Framework using C#. Then, you'll need to install the UnmanagedExports NuGet package. Then use the following code as a template:
+
+[source,C#]
+----
+using RGiesecke.DllExport;
+using System;
+using System.Runtime.InteropServices;
+
+namespace ExportTest
+{
+    // Export example.  Both calling conventions seem to work.
+    public static class Export
+    {
+        // Append to a string; example
+        [DllExport("my_string", CallingConvention = CallingConvention.Cdecl)]
+        public static IntPtr MyString(IntPtr myString)
+        {
+            var str = Marshal.PtrToStringAnsi(myString);
+            str += "; a";
+            var ptr = Marshal.StringToHGlobalAnsi(str);
+            return ptr;
+        }
+
+        // Return an integer; example
+        [DllExport("my_integer", CallingConvention = CallingConvention.StdCall)]
+        [return: MarshalAs(UnmanagedType.I4)]
+        public static int MyInteger()
+        {
+            return 3;
+        }
+    }
+}
+----
+
+Compile as *64-bit* (32-bit will work if you're using a 32-bit VM), then copy the resulting DLLs into the Squeak working directory (usually the same directory as the Squeak executable).
+
+==== 3. Define some class methods to call your DLL functions
+
+Here are a couple of example methods you can use. Be sure to define them as class methods, not Instance, unless you want to create an instance of the class first.
+
+[source,smalltalk]
+----
+testIt: aString
+  "send a string to and get a string from the export test function."
+  <apicall: char* 'my_string' (char*) module: 'ExportTest.dll'>
+  ^self externalCallFailed.
+
+testIt2
+  "get an integer from the export test function."
+  <cdecl: long 'my_integer' () module: 'ExportTest.dll'>
+  ^self externalCallFailed.
+----
+
+==== 4. If everything went well, these functions should be callable!
+
+Try the following using the Print It context menu item in a Cuis workspace:
+
+[source,smalltalk,subs="quotes"]
+----
+MyFFI testIt: 'asdf'. [.underline]#'asdf; a'#
+
+MyFFI testIt2. [.underline]#3#
+----
+
+==== 5. What happens if an exception is thrown?
+
+Try it (recompile a method in the C# code to throw an exception, and save your image beforehand). If you didn't want to try it, it aborts the program, which is the normal way an unhandled exception will work.
+
+==== Some other things to try
+
+Obviously using the C API is going to be a struggle at either end. I am attempting to figure out how to host the CLR or perhaps write a pluggable primitive (the latter of which should be more performant and less errorprone according to the Squeak mailing lists. I think for now the best option would be to pass back and forth JSON or XML to pass requests so that a lot of the errors that could happen will be more easily passable, especially considering the exception-prone nature of the .NET Framework.
