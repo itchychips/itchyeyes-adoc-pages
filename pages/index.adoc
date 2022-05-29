@@ -18,9 +18,8 @@ Ocean] droplet.
 
 I try to test the site on text based browsers as I can. As far as I'm
 concerned, the site should be as usable in a text-based browser as in a
-graphical-based one. I test with links, lynx, and elinks. Known issues:
-
-* links seems to center-align the main content. elinks and lynx do not do this.
+graphical-based one. I test with links, lynx, and elinks. No known issues as of
+yet.
 
 Email is error.chicken@itchyeyes.net. This email routes to Protonmail, thus if
 you wish to be as secure as possible, send from a Protonmail email address
