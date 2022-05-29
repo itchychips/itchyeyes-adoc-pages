@@ -1,0 +1,7 @@
+= README
+
+These are the pages for https://itchyeyes.net/[my site].
+
+Please see xref:COPYING.txt[] for the license that *this* repository's markup
+is under.  This license does *not* necessarily apply to the generated site
+content hosted at https://itchyeyes.net, which is All Rights Reserved.
