@@ -1,6 +1,9 @@
 = Cuis Smalltalk
 :toc: preamble
 :toclevels: 4
+:assetsdir: ../../assets
+:docinfodir: ..
+:docinfo: shared
 
 include::../_navhome.adoc[]
 
