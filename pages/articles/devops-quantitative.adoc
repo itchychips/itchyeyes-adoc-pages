@@ -1,0 +1,70 @@
+= Quantitative Devops
+:toc: preamble
+:toclevels: 4
+:assetsdir: ../../assets
+:docinfodir: ..
+:docinfo: shared
+
+include::../_navhome.adoc[]
+
+== Introduction
+
+Here is an idea I had while watching https://www.youtube.com/c/ProjectFarm[Project Farm's] videos, specifically their https://www.youtube.com/watch?v=xgQeSrsAXgE[Drill bit brand test video].  Could I do the same for devops tools, like flux, git, kubectl, k9s, etc?
+
+== Problems
+
+Computing in general has little history in quantitative measures.  The way Project Farm sets up their video tests is to try and use quantitative measures.  If they're drilling into steel, they set up the drill press to exert a constant amount of force.  If they're https://www.youtube.com/watch?v=_qE5COhBfAk[pouring from a gasoline container], they set up a way to as consistently pour as possible.
+
+Can we do the same thing with devops tools?  In some ways.  We could take timings against various platforms.  For exampe, kubectl could be tested against a homelab setup, AWS, Azure, and Google Cloud.  The number of discrete steps for a default login flow could be measured.  Here is a non-exhaustive list of qualitative measurement ideas I have:
+
+. Number of "steps"
+.. For login flows, it's the number of reasonable user actions, like xref:#example-login-flow[this example].
+. Average length of commands
+. Number of words add, removed, and modified to go from a read command to an update command
+.. e.g. `kubectl get pod -A` to `kubectl delete pod -n namespace_name pod_name` requires 2 modifications ("get"->"delete"; "-A"->"-n") and 2 additionals ("namespace_name" and "pod_name").
+.. If a utility existed that could read `kubectl get pod -A` that only added words to change it to an upadte command, then that would be less number of actions.  For example, if "progname" with the "-p" and "-d" flags existed to delete a pod, the number of effective words added in a bash environment would be 3, e.g. `kubectl get pod -A | progname -pd`.  The 3 words here are "|", "progname", and "-pd".
+.. This also penalizes programs that don't allow combination of short flags or only have one dash used for flags (such as ffmpeg).
+.. Which words have to be modified might also be quantitative, because modifying the second word instead of the last word on a command invocation is generally a less usable from a user experience perspective (with all the shells I know about).  We could use the default readline bindings to quantitatively identify the minimum number of keypresses it takes to modify such words.  So, for example, `az account list --out table | grep -i my_client` to get a client subscription, and then `az account set --name my_client_subscription` could be delete 7 words for 7 actions (Ctrl+W 7 times), then insert "set --name my_client_subscription" for 3 actions, for a total of 10 actions.  However, the number of keypresses would be 7 for word deletion, then "set --name my_client_subscription" would be considered 12 keypressed, since my_client_subscription is a variable length.  We could control this variable length to the minimum required in Azure.  If we go with number of actions, rewriting the command might be less actions, because `az account set --name my_client_subscription` is only 5 actions, but at the cost of 23 keypresses.  We have also been assuming up arrow or ctrl+p has not been recorded to modify a command to accommodate someone copying and pasting from a text editor with the commands, which in my experience is at least somewhat common.
+. The average time to non-interactively execute the commands.
+.. Programs like terraform will have quite a long execution depending on the complexity of the deployment.
+. Release time
+.. Do they release daily, weekly, monthly, yearly, etc.
+. Release impact
+.. Perhaps number of breaking changes per release over the past 6 months, and 1, 2, 3, and 5 year marks.
+. Security vulnerabilities in terms of CVEs documented
+
+Qualitative:
+
+. Error recoverability
+.. Given a certain error, like if a resource conflict exists for terraform, how easy is it to recover from such an issue?
+. General usability
+. Documentation
+. Scriptability across shells.
+.. This can be as simple as "Do you have unix-workable or JSON output?".  If you output JSON, basically everything is easily scriptable (assuming you have `jq`; PowerShell has `ConvertFrom-Json`).  If you output either line-oriented tab-separated values (that awk can easily deal with) or output that can be split on whitespace (which awk can also easily deal with), this means you are easily scriptable.
+
+== Outcomes and opinions
+
+I have some aspirations about the outcomes of this.  First, it's to identify what tool gaps exist, and how usable they are, especially around command line use.  After all, we should be automating every step of the way.
+
+Most often, I am typing commands to read some output, but then I want to use that output to do an action.  The worst examples of this is getting flux kustomizations with `flux get kustomizations -A`, but then having to suspend them with `flux get kustomizations -n namespace_name kustomization_name` (yes, I am aware you can use "ks" as shorthand for "kustomizations", but that is not quite obvious with use, and a quick skim of the documentation did not return results).  I've written a few command line programs where I can pipe the output into a different program, parse the TSV output, and then it does the actions for me instead of my having to change the overall command and copy certain parts of the previous output to execute a new action with the output
+
+Second is to provide some measures against different tooling.  If there's a kubectl alternative somewhere, I want to be able to measure it.  While quantitative analysis will be most impactful, quantitative analysis informs the subjective interpretation.  I do believe as time goes on, more measures will be added.
+
+== Examples
+
+[#example-login-flow]
+=== Login flow for kubernetes tools using Azure from an environment without a web browser
+
+Each of these points below is an "action".  We record including the invocation of the command up to, but excluding, the final result of the command.  If no login is required, then it is one step.  Otherwise, it will be more steps.
+
+The process to log oneself into an Azure Kubernetes when you are using managed identity credentials is (from memory) this:
+
+. Invoke the kubectl command, such as `kubectl get pods -A`.
+. Navigate to the page of the common URL for device login given from the shell output.footnote:[Navigation to a consistent URL will be considered one step, because if the user has a bookmark, it is one step.]
+. Copy the device code from the shell output.
+. Input the device code on the page.
+. Submit the device code form.
+. Select the user you wish to log in as.footnote:[We are assuming the user is already logged in and that the normal login flow does not trigger.]
+. Confirm that you want to log into the app specified on the page.
+
+That's 7 steps to log in.  That can be a quantitative measure given the assumptions running the command.

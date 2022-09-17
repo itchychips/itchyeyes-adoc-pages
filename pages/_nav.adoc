@@ -4,6 +4,8 @@
 | xref:articles/philosophy.adoc[Philosophy, prog]
 | +
 | xref:articles/sitedesign.adoc[Site design]
+| xref:articles/devops-quantitative.adoc[Quantitative DevOps]
+| xref:articles/autotools_cpp_setup.adoc[Autotools C++ Setup]
 | xref:userscripts/index.adoc[Userscripts]
 | https://github.com/itchychips?tab=repositories[Git repos]
 |
