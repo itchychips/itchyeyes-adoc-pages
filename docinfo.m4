@@ -1,3 +1,4 @@
+define([[DOCINFO_HTML]], [[dnl
 <link rel="icon" type="image/ico" href="/favicon.ico">
 
 <!-- Below adapted from
@@ -70,4 +71,5 @@
             console.error('Trigger:', e.trigger);
         });
     };
-</script>
+</script>dnl
+]])

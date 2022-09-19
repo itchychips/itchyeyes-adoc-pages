@@ -1,7 +1,7 @@
 = Itchy Eyes, a personal site
-:docinfo: shared
+COMMON_HEADER
 
-include::_nav.adoc[]
+SITE_NAV
 
 Welcome to Itchy Eyes. This is a possible gaming group, possible game front,
 and possible just a site I dump all my miscellaneous junk onto.

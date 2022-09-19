@@ -1,10 +1,11 @@
 = Site design
+COMMON_HEADER
 
 :fn-gitea: footnote:gitea[I am considering on ditching https://gitea.io/en-us/[Gitea] for dual mirroring my repositories on https://github.com/[GitHub] and https://about.gitlab.com/[GitLab] as I can't be bothered to keep it up to date]
 :fn-antora: footnote:antora[I found this too heavyweight for a personal site, plus I believe it would be confusing for most people (including myself) to navigate.  Also, I didn't want to have to rewrite a significant chunk of their default UI bundle that has examples all over the place instead of being professionally usable out of the box.]
 :fn-asciidoctor-install: footnote:asciidoctor-install[On Windows, use msys2 or mingw32/64, because normal ruby might have issues with some asciidoctor extensions if you so choose.  I mostly observed this with ruby gems I've tried that need a C compiler--they failed to build.]
 
-include::../_navhome.adoc[]
+NAVHOME_LINK
 
 The site's design is simple. All of what I serve currently are static pages. My
 thought is that if I don't have a lot of traffic, it's better to have a site

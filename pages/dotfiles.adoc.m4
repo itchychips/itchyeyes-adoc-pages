@@ -1,9 +1,7 @@
 = dotfile snippets
-:toc: preamble
-:assetsdir: ../assets
-:docinfo: shared
+COMMON_HEADER
 
-include::_navhome.adoc[]
+NAVHOME_LINK
 
 == tmux
 

@@ -1,7 +1,7 @@
 = Philosophy, programming
-:toc: preamble
+COMMON_HEADER
 
-include::../_navhome.adoc[]
+NAVHOME_LINK
 
 == The rules.
 

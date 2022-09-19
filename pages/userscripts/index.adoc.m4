@@ -1,6 +1,7 @@
 = Userscripts collection
+COMMON_HEADER
 
-include::../_navhome.adoc[]
+NAVHOME_LINK
 
 These are a collection of userscripts that you can use with Tampermonkey and
 (probably) Violentmonkey.  All of these are fairly trivial, so should be MIT

@@ -1,9 +1,7 @@
 = Autotools C++ Setup
-:toc: preamble
-:toclevels: 4
-:assetsdir: ../../assets
-:docinfodir: ..
-:docinfo: shared
+COMMON_HEADER
+
+NAVHOME_LINK
 
 == Introduction
 

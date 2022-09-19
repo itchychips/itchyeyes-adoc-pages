@@ -1,6 +1,6 @@
 = About Itchy Eyes
 
-include::../_navhome.adoc[]
+NAVHOME_LINK
 
 Itchy Eyes is a site that I run for my personal musings. If there's a chance that someone is interested in them, that's awesome. It was worth it.
 
